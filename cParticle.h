@@ -15,12 +15,12 @@ private:
 
 public:
     cParticle();
-    int     cParticle::getdata(int index) const;
-    void    cParticle::setData(int index, int value);
-    int     cParticle::getpBest() const;
-    void    cParticle::setpBest(int value);
-    float   cParticle::getVelocity() const;
-    void    cParticle::setVelocity(float value);
+    int     getData(int index) const;
+    void    setData(int index, int value);
+    int     getpBest() const;
+    void    setpBest(int value);
+    float   getVelocity() const;
+    void    setVelocity(float value);
 
 }; // end cParticle class.
 
