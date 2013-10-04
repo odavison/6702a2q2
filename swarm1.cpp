@@ -30,6 +30,8 @@ void psoAlgorithm()
       */
         if(epoch < MAX_EPOCHS){
 
+            cout << "Epoch number: " << epoch << endl;
+
             for(int i = 0; i <= MAX_PARTICLES - 1; i++)
             {
                 for(int j = 0; j <= MAX_INPUTS - 1; j++)
@@ -45,6 +47,7 @@ void psoAlgorithm()
                 if(testProblem(i) == TARGET)
                 {
                     done = true;
+                    cout << "Particle " << i << " has achieved target." << endl;
                 }
             } // i
 
@@ -65,6 +68,7 @@ void psoAlgorithm()
 
         }else{
             done = true;
+            cout << "No solution found." << endl;
         }
 
     }while(!done);
@@ -167,7 +171,8 @@ float gRand()
 int getRandomNumber(int low, int high)
 {
     // Returns a pseudo-random integer between low and high.
-    return low + int(((high - low) + 1) * rand() / (RAND_MAX + 1.0)); 
+
+    return low + int(((high - low) + 1) * (float)rand()/(RAND_MAX+1.0)); 
 }
 
 int minimum()
