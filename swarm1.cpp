@@ -139,19 +139,21 @@ void updateParticles(int gBestIndex)
     
     for(int i = 0; i <= MAX_PARTICLES - 1; i++)
     {
+		total = 0;
         for(int j = 0; j <= MAX_INPUTS - 1; j++)
         {
-            if(particles[i].getData(j) != particles[gBestIndex].getData(j))
+			tempData = particles[i].getData(j);
+            if(tempData != particles[gBestIndex].getData(j))
             {
-                tempData = particles[i].getData(j);
-                particles[i].setData(j, tempData + static_cast<int>(particles[i].getVelocity()));
+                tempData += static_cast<int>(particles[i].getVelocity());
+                particles[i].setData(j, tempData);
             }
+			total += tempData;
         } // j
 
-		updateTotal(i); 
+		particles[i].setTotal(total); 
 
         //Check pBest value.
-        total = testProblem(i);
         if(abs(TARGET - total) < particles[i].getpBest())
         {
             particles[i].setpBest(total);
@@ -164,18 +166,6 @@ void updateParticles(int gBestIndex)
 int testProblem(int index)
 {
 	return particles[index].getTotal();
-}
-
-void updateTotal(int index)
-{
-    int total = 0;
-
-    for(int i = 0; i <= MAX_INPUTS - 1; i++)
-    {
-        total += particles[index].getData(i);
-    } // i
-
-	particles[index].setTotal(total);
 }
 
 float gRand()
