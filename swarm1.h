@@ -4,6 +4,7 @@
 #define SWARM1_H
 
 #define EX0
+#define SEED 1
 
 /*
 Sources:

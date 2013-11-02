@@ -6,7 +6,12 @@ cParticle particles[MAX_PARTICLES];
 
 int main()
 {
-    srand((unsigned)time(0));
+
+#ifdef SEED
+	srand(SEED);
+#else
+	srand((unsigned)time(0));
+#endif
 
     psoAlgorithm();
 
@@ -15,21 +20,24 @@ int main()
 
 void psoAlgorithm()
 {
-    int gBest = 0;
+
+	int gBest = 0;
     int gBestTest = 0;
     int epoch = 0;
     bool done = false;
 
     initialize();
 
-    do
+	do
     {
       /* Two conditions can end this loop:
             if the maximum number of epochs allowed has been reached, or,
             if the Target value has been found.
       */
+
         if(epoch < MAX_EPOCHS){
 
+#ifdef EX0
             cout << "Epoch number: " << epoch << endl;
 
             for(int i = 0; i <= MAX_PARTICLES - 1; i++)
@@ -50,6 +58,7 @@ void psoAlgorithm()
                     cout << "Particle " << i << " has achieved target." << endl;
                 }
             } // i
+#endif //EX0
 
             gBestTest = minimum();
 
