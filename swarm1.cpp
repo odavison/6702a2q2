@@ -148,6 +148,8 @@ void updateParticles(int gBestIndex)
             }
         } // j
 
+		updateTotal(i); 
+
         //Check pBest value.
         total = testProblem(i);
         if(abs(TARGET - total) < particles[i].getpBest())
@@ -161,6 +163,11 @@ void updateParticles(int gBestIndex)
 
 int testProblem(int index)
 {
+	return particles[index].getTotal();
+}
+
+void updateTotal(int index)
+{
     int total = 0;
 
     for(int i = 0; i <= MAX_INPUTS - 1; i++)
@@ -168,7 +175,7 @@ int testProblem(int index)
         total += particles[index].getData(i);
     } // i
 
-    return total;
+	particles[index].setTotal(total);
 }
 
 float gRand()

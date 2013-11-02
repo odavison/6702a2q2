@@ -137,6 +137,7 @@ void    getVelocity(int gBestIndex);
 void    updateParticles(int gBestIndex);
 void    initialize();
 int     testProblem(int index);
+void	updateTotal(int index);
 float   gRand();
 int     getRandomNumber(int low, int high);
 int     minimum();

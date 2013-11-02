@@ -10,6 +10,7 @@ class cParticle
 
 private:
     int     mData[MAX_INPUTS];
+	int		mTotal;
     int     mpBest;
     float   mVelocity;
 
@@ -17,6 +18,8 @@ public:
     cParticle();
     int     getData(int index) const;
     void    setData(int index, int value);
+	int     getTotal() const;
+    void    setTotal(int value);
     int     getpBest() const;
     void    setpBest(int value);
     float   getVelocity() const;

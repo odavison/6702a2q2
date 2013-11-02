@@ -18,6 +18,16 @@ void cParticle::setData(int index, int value)
     this->mData[index] = value;
 }
 
+int cParticle::getTotal() const
+{
+    return this->mTotal;
+}
+
+void cParticle::setTotal(int value)
+{
+    this->mTotal = value;
+}
+
 int cParticle::getpBest() const
 {
     return this->mpBest;
