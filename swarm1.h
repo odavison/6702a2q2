@@ -3,7 +3,7 @@
 #ifndef SWARM1_H
 #define SWARM1_H
 
-#define EX0
+#define EX7
 #define SEED 1
 
 /*
