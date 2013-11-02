@@ -1,5 +1,9 @@
 // Filename: swarm1.cpp
 
+#ifdef USE_OMP //OMP_NUM_THREADS should be defined as an environment variable
+	#include <omp.h>
+#endif //USE_OMP
+
 #include "swarm1.h"
 
 cParticle particles[MAX_PARTICLES];
@@ -137,6 +141,7 @@ void updateParticles(int gBestIndex)
 {
     int total, tempData;
     
+#pragma omp parallel for private(total, tempData) schedule(dynamic)
     for(int i = 0; i <= MAX_PARTICLES - 1; i++)
     {
 		total = 0;
