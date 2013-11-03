@@ -95,17 +95,30 @@ void initialize()
 {
     int total;
 
-    for(int i = 0; i <= MAX_PARTICLES - 1; i++)
-    {
-        total = 0;
-        for(int j = 0; j <= MAX_INPUTS - 1; j++)
-        {
-            particles[i].setData(j, getRandomNumber(START_RANGE_MIN, START_RANGE_MAX));
-            total += particles[i].getData(j);
-        } // j
-        particles[i].setpBest(total);
-    } // i
+#ifdef USE_OMP
+		threadSeed = rand();
+#endif //USE_OMP
 
+#pragma omp parallel
+	{
+#ifdef USE_OMP
+		// Windows rand() is thread-safe, but each thread needs its own seed
+		srand( threadSeed ^ omp_get_num_threads() );
+#endif //USE_OMP
+
+		#pragma omp for private(total) schedule(dynamic)
+		for(int i = 0; i <= MAX_PARTICLES - 1; i++)
+		{
+			total = 0;
+			for(int j = 0; j <= MAX_INPUTS - 1; j++)
+			{
+				particles[i].setData(j, getRandomNumber(START_RANGE_MIN, START_RANGE_MAX));
+				total += particles[i].getData(j);
+			} // j
+			particles[i].setpBest(total);
+		} // i
+
+	}
     return;
 }
 
