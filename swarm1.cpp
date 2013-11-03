@@ -120,21 +120,35 @@ void getVelocity(int gBestIndex)
     
     bestResults = testProblem(gBestIndex);
 
-    for(int i = 0; i <= MAX_PARTICLES - 1; i++)
-    {
-        testResults = testProblem(i);
-        vValue = particles[i].getVelocity() + 
-            2 * gRand() * (particles[i].getpBest() - testResults) + 2 * gRand() * 
-                                                    (bestResults - testResults);
+#ifdef USE_OMP
+		threadSeed = rand();
+#endif //USE_OMP
 
-        if(vValue > V_MAX){
-            particles[i].setVelocity(V_MAX);
-        }else if(vValue < -V_MAX){
-            particles[i].setVelocity(-V_MAX);
-        }else{
-            particles[i].setVelocity(vValue);
-        }
-    } // i
+#pragma omp parallel
+	{
+#ifdef USE_OMP
+		// Windows rand() is thread-safe, but each thread needs its own seed
+		srand( threadSeed ^ omp_get_num_threads() );
+#endif //USE_OMP
+
+	#pragma omp for private(testResults, vValue) schedule(dynamic)
+		for(int i = 0; i <= MAX_PARTICLES - 1; i++)
+		{
+
+			testResults = testProblem(i);
+			vValue = particles[i].getVelocity() + 
+				2 * gRand() * (particles[i].getpBest() - testResults) +
+				2 * gRand() * (bestResults - testResults);
+
+			if(vValue > V_MAX){
+				particles[i].setVelocity(V_MAX);
+			}else if(vValue < -V_MAX){
+				particles[i].setVelocity(-V_MAX);
+			}else{
+				particles[i].setVelocity(vValue);
+			}
+		} // i
+	}
 }
 
 void updateParticles(int gBestIndex)
