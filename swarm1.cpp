@@ -183,7 +183,7 @@ int getRandomNumber(int low, int high)
 {
     // Returns a pseudo-random integer between low and high.
 
-    return low + int(((high - low) + 1) * (float)rand()/(RAND_MAX+1.0)); 
+    return low + int(((high - low) + 1) * gRand()); 
 }
 
 int minimum()
